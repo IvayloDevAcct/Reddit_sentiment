@@ -41,7 +41,7 @@ B. My own approach that is scanning the text for specific words that are passed 
 
 #### Final score = (A + B) / 2
 
-All individual posts with their respective stats are stored in Google sheet for this example priject. For real world use I would store them in a database. 
+All individual posts with their respective stats are stored in Google sheet for this example project. For real world use I would store them in a database. 
 
 The script is designed to run every 24 hours and analyse up to 1000 most recent posts (that's Reddit API limit). So far from the debugging I can tell that this is about day and a half worth of relevent crypto posts. It keeps track of which posts we already have in record, so if it scans one of them again, it updates the existing entry for any new comments / score change instead of creating double entries.
 
