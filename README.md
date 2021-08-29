@@ -22,8 +22,11 @@ Python 3.7
 
 #### Used libraries:
 Praw (Reddit API solutiuon) https://github.com/praw-dev/praw
+
 pygsheets (Google Sheets API solution) https://pygsheets.readthedocs.io/en/stable/index.html
-Pandas
+
+Pandas https://pandas.pydata.org/
+
 nltk https://www.nltk.org
 
 ### Functionality
