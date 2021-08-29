@@ -35,10 +35,14 @@ class TextAnalyser:
         return [word for word in words if word not in ingore_words and word not in punctuations
                 and not word.isnumeric()]
 
-    def score_post(self, post, comments):
-        """Applies scores to the words derived from the text based on predefined set of positive / negative words"""
+    def score_post(self, words):
+        """
+        Scores the derived from the text based on predefined set of positive / negative words.
+        :inputs: list
+        :returns: dict
 
-        words = post + comments
+        words - list of cleaned words from the content of the post
+        """
 
         # Count number of positive words
         positive_words_count = len([w for w in words if w in self.positive])

@@ -91,42 +91,44 @@ def main():
                             pass
 
                     # Score the post using proprietary keywords
-                    content_score = parser.score_post(processed_body, processed_comments)
+                    content_score = parser.score_post(processed_body + processed_comments)
 
                     # Calculate the average of the vader sores of all comments
                     vader_content_score = sum(vader_score) / len(vader_score)
 
-                    if not analysed and content_score["words_count"] > 100:
+                    if content_score:
 
-                        # Create a post data row for the DB
-                        post_info = {
-                            "id": post.id,
-                            "day_created": day_of_creation,
-                            "hour_created": hour_of_creation,
-                            "relevant asset": asset[0].upper(),
-                            "up_votes": post.ups,
-                            "number_of_comments": len(comments),
-                            "title": post.title,
-                            'positive_points': content_score['positive'],
-                            "negative points": content_score['negative'],
-                            "total_relevant_words": content_score["words_count"],
-                            "vader_score": vader_content_score,
-                            "prop_score": content_score['overall']
-                        }
+                        if not analysed and content_score["words_count"] > 100:
 
-                        # Calculate an average of the two scores
-                        post_info["score"] = (post_info['vader_score'] + post_info['prop_score']) / 2
+                            # Create a post data row for the DB
+                            post_info = {
+                                "id": post.id,
+                                "day_created": day_of_creation,
+                                "hour_created": hour_of_creation,
+                                "relevant asset": asset[0].upper(),
+                                "up_votes": post.ups,
+                                "number_of_comments": len(comments),
+                                "title": post.title,
+                                'positive_points': content_score['positive'],
+                                "negative points": content_score['negative'],
+                                "total_relevant_words": content_score["words_count"],
+                                "vader_score": vader_content_score,
+                                "prop_score": content_score['overall']
+                            }
 
-                        if post.id not in existing_post_ids:
+                            # Calculate an average of the two scores
+                            post_info["score"] = (post_info['vader_score'] + post_info['prop_score']) / 2
 
-                            # Add row to the Data frame
-                            new_data = new_data.append(post_info, ignore_index=True)
+                            if post.id not in existing_post_ids:
 
-                        else:
-                            existing_data.append(post_info)
+                                # Add row to the Data frame
+                                new_data = new_data.append(post_info, ignore_index=True)
 
-                        # Assign analysed status in order to avoid adding the same post again for another asset
-                        analysed = True
+                            else:
+                                existing_data.append(post_info)
+
+                            # Assign analysed status in order to avoid adding the same post again for another asset
+                            analysed = True
 
     if not new_data.empty:
 
