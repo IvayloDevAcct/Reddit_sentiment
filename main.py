@@ -4,7 +4,7 @@ import praw
 import os, time, datetime
 import pandas as pd
 
-from dashboard.gsheet import write_to_gsheet
+from dashboard.gsheet import *
 
 
 # Set a Subreddit and keywords for the search (could be done via frontend/web interface)
@@ -28,15 +28,24 @@ def main():
     topic = reader.subreddit(SUBREDDIT)
     new_posts = topic.new(limit=1000)
 
-    # Create a data frame to store results
-    data = pd.DataFrame()
+    # Create a data frame to store new results
+    new_data = pd.DataFrame()
+
+    # Create a list to results for posts we already have but might have gotten new comments
+    existing_data = []
+
+    # Create a google sheet object
+    sheet = GoogleSheet(service_file_path, workbook_id, sheet_name)
+
+    # Get the IDs of all posts in the "database" (currently using google sheet for this purpose, ideally SLQ)
+    existing_post_ids = sheet.get_existing_post_ids()
 
     # Create a parser object
     parser = TextAnalyser("english")
 
     for post in new_posts:
 
-        # Assign not analysed status for the post until it's recognized as relevant for one of the assets
+        # Assign not analysed status for the post until it's recognized as relevant for one of the assets in the list
         analysed = False
 
         # Loop through the list of targets and look for mention within the posts/comments.
@@ -88,8 +97,9 @@ def main():
                     vader_content_score = sum(vader_score) / len(vader_score)
 
                     if not analysed and content_score["words_count"] > 100:
-                        # Add row to the Data frame
-                        data = data.append({
+
+                        # Create a post data row for the DB
+                        post_info = {
                             "id": post.id,
                             "day_created": day_of_creation,
                             "hour_created": hour_of_creation,
@@ -102,25 +112,40 @@ def main():
                             "total_relevant_words": content_score["words_count"],
                             "vader_score": vader_content_score,
                             "prop_score": content_score['overall']
-                        }, ignore_index=True)
+                        }
 
-                        # Assign analysed status in order to avoid adding the post again for another asset
+                        # Calculate an average of the two scores
+                        post_info["score"] = (post_info['vader_score'] + post_info['prop_score']) / 2
+
+                        if post.id not in existing_post_ids:
+
+                            # Add row to the Data frame
+                            new_data = new_data.append(post_info, ignore_index=True)
+
+                        else:
+                            existing_data.append(post_info)
+
+                        # Assign analysed status in order to avoid adding the same post again for another asset
                         analysed = True
 
-    try:
-
-        # Calculate an average of the two scores
-        data["score"] = (data['vader_score'] + data['prop_score']) / 2
+    if not new_data.empty:
 
         # Store the results locally (ideally in a Database)
-        data.to_csv(os.path.dirname(os.getcwd()) +
+        new_data.to_csv(os.path.dirname(os.getcwd()) +
                     f'\\Reddit_sentiment\\files\\posts_{datetime.datetime.now().strftime("%d_%m_%y_%H_%M")}.csv')
 
         # Write to google sheet for the purposes of the dashboard
-        write_to_gsheet(data)
+        sheet.add_data(new_data)
 
-    except KeyError:
-        print("No data matching the query.")
+    else:
+        print("No new data matching the query.")
+
+    if existing_data:
+        # Update the existing entries for the latest posts
+        sheet.update_data(existing_data)
+
+    else:
+        print("No existing records for update.")
 
     time.sleep(60 * 60 * 24)
     main()
