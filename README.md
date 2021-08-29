@@ -39,12 +39,36 @@ The script is capable of acquiring Reddit posts, filtering and splitting the tex
 
 A. nltk Vader module. That's a scoring approach that uses word lexicons to score texts. The score output is in the range -1 to 1 
 
-B. My own approach that is scanning the text for specific words that are passed to the script. For the purpose of this example project I created two short lists with positive and negative words in the context of crypto trading. This list is to be improved by optimization for real world use. I also normalize the scores to a range between -1 and 1 as well.
+B. My own approach that is scanning the text for specific words that are passed to the script. For the purpose of this example project I created two short lists with positive and negative words in the context of crypto trading. This list is to be improved by optimization for real world use. I also normalize the scores to a range between -1 and 1 as well. The function that does that is part of the TextAnalyser class.
 
-`score = ((positive_words_count - negative_words_count) / len(words)) * 100
+    def score_post(self, words):
+        """
+        Scores the derived from the text based on predefined set of positive / negative words.
+        :inputs: list
+        :returns: dict
 
- # Normalize the scores similarly to Vader in order for the two scores to be comparable
- normalized_score = score/math.sqrt((score * score) + 10)`
+        words - list of cleaned words (str) from the content of the post
+        """
+
+        # Count number of positive words
+        positive_words_count = len([w for w in words if w in self.positive])
+
+        # Count number of negative words
+        negative_words_count = len([w for w in words if w in self.negative])
+
+        # Calculate the score
+        if words:
+            score = ((positive_words_count - negative_words_count) / len(words)) * 100
+
+            # Normalize the scores similarly to Vader in order for the two scores to be comparable
+            normalized_score = score/math.sqrt((score * score) + 10)
+
+            return {
+                "overall": normalized_score,
+                "positive": positive_words_count,
+                "negative": negative_words_count,
+                "words_count": len(words)
+                }
 
 #### Final score = (A + B) / 2
 
