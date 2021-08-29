@@ -1,8 +1,10 @@
 # Reddit sentiment analyser
 
-Python script that scans Reddit posts and comments and summarises information abouth the activity and sentiment on specidic topics. Get all Reddit posts + comments on specified topic and look for a set of key words to shortlist the relevant posts for analysis. Example for topic would be Cryptocurrencies. Example for key words would be: BTC, ETH etc... 
+Python script that scans Reddit posts and comments and summarises information about the activity and the sentiment on specidic topics. it gets all Reddit posts and comments, and look for a set of key words to shortlist the relevant posts for analysis. Example for topic would be Cryptocurrencies. Example for key words would be: BTC, ETH, ADA etc... 
 
 A score is applied to each post and cooment in order to get the overall sentiment for the assets of interest. All results are stored in a google sheet. A summary Google data studio dashboard is updated on a daily basis with the stats.
+
+The focus is on Crypto, but it can be easily modified to analyse any topic if we replace the dual approach sentiment scoring system with just Vader analysis.
  
 #### Google Sheet data
 https://docs.google.com/spreadsheets/d/1S8RC6zd7p7ZyxTJBSZs81DrF8Wk9Rx77-zJ_sgU4fzE/edit?usp=sharing
