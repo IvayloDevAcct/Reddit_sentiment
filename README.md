@@ -33,7 +33,7 @@ nltk https://www.nltk.org
 
 ### Functionality
 
-THe script is capable of asquiring Reddit posts, splitting the text into words. In order to score for positive/negative bias of the Reddit user that created the post.
+The script is capable of acquiring Reddit posts, filtering and splitting the text into words. Then the text of the comments and the cleaned sets of words are analysed for positive/negative bias of the Reddit user that created the post and scored.
 
 #### Two scoring approaches:
 
@@ -49,4 +49,5 @@ The script is designed to run every 24 hours and analyse up to 1000 most recent 
 
 The Dashboard allows filter by date or asset.
 
-
+### Flow chart
+https://lucid.app/lucidchart/invitations/accept/inv_fd20599a-a76e-40ff-aa7d-5a2d7e81ad7e
