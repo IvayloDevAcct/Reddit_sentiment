@@ -1,7 +1,7 @@
 # Reddit_sentiment
-Python script that scans Reddit posts and comments and gathers info towards the sentiment on specidic topics. Python script is used to get all Reddit posts + comments on specified topin and look for a set of key words to shortlist them for analysis. Example for topic would be Cryptocurrencies. Example for key words would be BTC, ETH etc... A score is applied to each post and cooment in order to get the overall sentiment for the assets of interest. 
- 
-All results are stored in a google sheet. A summary dashboard is updated on a daily basis with the results of the analysis through Google data studio.
+Python script that scans Reddit posts and comments and summarises information abouth the activity and sentiment on specidic topics. Get all Reddit posts + comments on specified topic and look for a set of key words to shortlist the relevant posts for analysis. Example for topic would be Cryptocurrencies. Example for key words would be: BTC, ETH etc... 
+
+A score is applied to each post and cooment in order to get the overall sentiment for the assets of interest. All results are stored in a google sheet. A summary Google data studio dashboard is updated on a daily basis with the stats.
  
 #### Google Sheet data
 https://docs.google.com/spreadsheets/d/1S8RC6zd7p7ZyxTJBSZs81DrF8Wk9Rx77-zJ_sgU4fzE/edit?usp=sharing
@@ -40,6 +40,6 @@ All individual posts with their respective stats are stored in Google sheet for 
 
 The script is designed to run every 24 hours and analyses up to 1000 most recent posts (that's Reddit API limit). So far from the debugging I can tell that this is about day and a half worth of relevent crypto posts. It keeps track of which posts we already have in record, so if it scans one of them again, it updates the existing entry for any new comments / score change instead of creating double entries.
 
-
+The Dashboard allows filter by date or asset.
 
 
