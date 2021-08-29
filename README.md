@@ -35,7 +35,7 @@ THe script is capable of asquiring Reddit posts, splitting the text into words. 
 
 #### Two scoring approaches:
 
-A. nltk Vader module. That's a scoring approach that uses word lexicons to score texts. Outputs scores between -1 and 1 
+A. nltk Vader module. That's a scoring approach that uses word lexicons to score texts. The score output is in the range -1 to 1 
 
 B. My own approach that is scanning the text for specific words that are passed to the script. For the purpose of this example project I created two short lists with positive and negative words in the context of crypto trading. This list is to be improved by optimization for real world use. I also normalize the scores to a range between -1 and 1 as well.
 
