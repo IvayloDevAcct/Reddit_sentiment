@@ -50,4 +50,4 @@ The script is designed to run every 24 hours and analyse up to 1000 most recent 
 The Dashboard allows filter by date or asset.
 
 ### Flow chart
-https://lucid.app/lucidchart/invitations/accept/inv_fd20599a-a76e-40ff-aa7d-5a2d7e81ad7e
+![alt text](flowchart.png)
