@@ -26,4 +26,3 @@ def write_to_gsheet(data):
         sheet.clear()
         sheet.set_dataframe(data, (1, 1), encoding='utf-8', fit=True)
         sheet.frozen_rows = 1
-

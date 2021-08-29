@@ -1,5 +1,5 @@
 from reddit.analyser import TextAnalyser
-from reddit.reader import SECRET_KEY, ID, PASSWORD
+from reddit.reader import creds
 import praw
 import os, time, datetime
 import pandas as pd
@@ -17,16 +17,16 @@ def main():
 
     # Initiate reddit reader object using the PRAW module
     reader = praw.Reddit(
-        client_id=ID,
-        client_secret=SECRET_KEY,
+        client_id=creds['user_id'],
+        client_secret=creds['secret'],
         username="ivailo_opalchenski",
-        password=PASSWORD,
+        password=creds['pass'],
         user_agent="ivailo_opalchenski"
     )
 
     # Set the search parameters
     topic = reader.subreddit(SUBREDDIT)
-    new_posts = topic.new(limit=1500)
+    new_posts = topic.new(limit=1000)
 
     # Create a data frame to store results
     data = pd.DataFrame()
