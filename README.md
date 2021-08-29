@@ -41,6 +41,11 @@ A. nltk Vader module. That's a scoring approach that uses word lexicons to score
 
 B. My own approach that is scanning the text for specific words that are passed to the script. For the purpose of this example project I created two short lists with positive and negative words in the context of crypto trading. This list is to be improved by optimization for real world use. I also normalize the scores to a range between -1 and 1 as well.
 
+`score = ((positive_words_count - negative_words_count) / len(words)) * 100
+
+ # Normalize the scores similarly to Vader in order for the two scores to be comparable
+ normalized_score = score/math.sqrt((score * score) + 10)`
+
 #### Final score = (A + B) / 2
 
 All individual posts with their respective stats are stored in Google sheet for this example project. For real world use I would store them in a database. 
