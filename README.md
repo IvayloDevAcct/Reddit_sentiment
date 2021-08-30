@@ -1,8 +1,8 @@
 # Reddit sentiment analyser
 
-Python script that scans Reddit posts and comments and summarises information about the activity and the sentiment on specidic topics. it gets all Reddit posts and comments, and look for a set of key words to shortlist the relevant posts for analysis. Example for topic would be Cryptocurrencies. Example for key words would be: BTC, ETH, ADA etc... 
+Python script that scans Reddit posts and comments and summarizes information about the activity and the sentiment on specidic topics. It loops through Reddit posts and comments, and looks for a set of key words to shortlist the relevant ones for analysis. Example for topic would be Cryptocurrencies. Example for key words would be: BTC, ETH, ADA etc... 
 
-A score is applied to each post and cooment in order to get the overall sentiment for the assets of interest. All results are stored in a google sheet. A summary Google data studio dashboard is updated on a daily basis with the stats.
+A score is applied to each post and cooment in order to get the overall sentiment for the assets of interest. For the purpose of this example, all results are stored locally and in a Google sheet. An example of vizualization of the stats is avaliable through Google data studio dashboard.
 
 The focus is on Crypto, but it can be easily modified to analyse any topic if we replace the dual approach sentiment scoring system with just Vader analysis.
  
@@ -39,7 +39,7 @@ The script is capable of acquiring Reddit posts, filtering and splitting the tex
 
 A. nltk Vader module. That's a scoring approach that uses word lexicons to score texts. The score output is in the range -1 to 1 
 
-B. My own approach that is scanning the text for specific words that are passed to the script. For the purpose of this example project I created two short lists with positive and negative words in the context of crypto trading. This list is to be improved by optimization for real world use. I also normalize the scores to a range between -1 and 1 as well. The function that does that is part of the TextAnalyser class.
+B. My own approach that is scanning the text for specific words that are passed to the script. For the purpose of this example project I created two short lists with positive and negative words in the context of crypto trading. This list is to be improved by optimization for real world use. I also normalize the scores to a range between -1 and 1. The function that does that is part of the TextAnalyser class.
 
     def score_post(self, words):
         """
@@ -70,7 +70,7 @@ B. My own approach that is scanning the text for specific words that are passed 
                 "words_count": len(words)
                 }
 
-#### Final score = (A + B) / 2
+#### Final score = ( score A + score B) / 2
 
 All individual posts with their respective stats are stored in Google sheet for this example project. For real world use I would store them in a database. 
 
