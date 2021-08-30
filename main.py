@@ -1,11 +1,15 @@
 from reddit.analyser import TextAnalyser
-from reddit.reader import creds
 import praw
 import os, time, datetime
 import pandas as pd
 
 from dashboard.gsheet import *
 
+import json
+
+# Path to my creds file. IT WON'T work on another machine. Please set the path to your Reddit credentials.
+with open("C:\\Users\\ivayl\\Documents\\Nexo Work\\creds.json", "r", encoding="utf8") as f:
+    creds = json.load(f)
 
 # Set a Subreddit and keywords for the search (could be done via frontend/web interface)
 SUBREDDIT = "cryptocurrency"

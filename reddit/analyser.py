@@ -7,32 +7,31 @@ from nltk.sentiment.vader import SentimentIntensityAnalyzer
 import math
 
 
+PUNCT = "?:!.,;[]()'%&/*''"
+
+
 class TextAnalyser:
-    def __init__(self, lang, ):
+    def __init__(self, lang):
         self.__language = lang
-        self.positive = self.load_positive_words()
-        self.negative = self.load_negative_words()
+        self.positive = self.load_words(os.path.dirname(os.getcwd()) + '\\Reddit_sentiment\\files\\positive_words.txt')
+        self.negative = self.load_words(os.path.dirname(os.getcwd()) + '\\Reddit_sentiment\\files\\negative_words.txt')
         self.vader = SentimentIntensityAnalyzer()
 
-    def load_positive_words(self):
+    @staticmethod
+    def load_words(path):
         """Load predefined lists of words (ideally from database)"""
 
-        with open(os.path.dirname(os.getcwd()) + '\\Reddit_sentiment\\files\\positive_words.txt') as p_file:
+        with open(path) as p_file:
             return [line.rstrip(",\n") for line in p_file if line]
-
-    def load_negative_words(self):
-        with open(os.path.dirname(os.getcwd()) + '\\Reddit_sentiment\\files\\negative_words.txt') as n_file:
-            return [line.rstrip(",\n") for line in n_file if line]
 
     def process_text(self, text):
         """Parses the text into words and filters out the stopwords"""
 
         ingore_words = set(sw.words(self.__language))
-        punctuations = "?:!.,;[]()'%&/*''"
 
         words = word_tokenize(text.lower())
 
-        return [word for word in words if word not in ingore_words and word not in punctuations
+        return [word for word in words if word not in ingore_words and word not in PUNCT
                 and not word.isnumeric()]
 
     def score_post(self, words):

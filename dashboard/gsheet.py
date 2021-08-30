@@ -1,7 +1,9 @@
 import pygsheets
 
-
+# This is the path to my token file. IT WON'T work on another machine. Please set the path to your token.
 service_file_path = "C:\\Users\\ivayl\\Documents\\Nexo Work\\google_api_key.json"
+
+
 workbook_id = "1S8RC6zd7p7ZyxTJBSZs81DrF8Wk9Rx77-zJ_sgU4fzE"
 sheet_name = "Sheet1"
 

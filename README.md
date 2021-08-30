@@ -5,14 +5,14 @@ Python script that scans Reddit posts and comments and summarizes information ab
 A score is applied to each post and cooment in order to get the overall sentiment for the assets of interest. For the purpose of this example, all results are stored locally and in a Google sheet. An example of vizualization of the stats is avaliable through Google data studio dashboard.
 
 The focus is on Crypto, but it can be easily modified to analyse any topic if we replace the dual approach sentiment scoring system with just Vader analysis.
- 
+
 #### Google Sheet data
 https://docs.google.com/spreadsheets/d/1S8RC6zd7p7ZyxTJBSZs81DrF8Wk9Rx77-zJ_sgU4fzE/edit?usp=sharing
 
 #### Google Data studio visualization
 https://datastudio.google.com/reporting/afb6ede0-f8fe-41bb-982a-28788050a3cf
- 
- 
+
+
 ## Motivation
 This is a job interwiev project.
 
@@ -46,23 +46,23 @@ B. My own approach that is scanning the text for specific words that are passed 
         Scores the derived from the text based on predefined set of positive / negative words.
         :inputs: list
         :returns: dict
-
+    
         words - list of cleaned words (str) from the content of the post
         """
-
+    
         # Count number of positive words
         positive_words_count = len([w for w in words if w in self.positive])
-
+    
         # Count number of negative words
         negative_words_count = len([w for w in words if w in self.negative])
-
+    
         # Calculate the score
         if words:
             score = ((positive_words_count - negative_words_count) / len(words)) * 100
-
+    
             # Normalize the scores similarly to Vader in order for the two scores to be comparable
             normalized_score = score/math.sqrt((score * score) + 10)
-
+    
             return {
                 "overall": normalized_score,
                 "positive": positive_words_count,
@@ -80,3 +80,7 @@ The Dashboard allows filter by date or asset.
 
 ### Flow chart
 ![alt text](flowchart.png)
+
+
+
+##### The project requires Reddit API and Google API credentials. If you want to test the code you must specify paths to your credentials (main.py row 11 and gsheet.py row 4)
